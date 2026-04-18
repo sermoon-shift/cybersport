@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="text-5xl text-center mb-8">Регистрация</p>
+<form action="" method="post" class="text-center">
+    {{ form.hidden_tag() }}
+    <p class="mb-4">
+        {{ form.email.label(class="text-2xl") }}<br>
+        {{ form.email(class="form-control text-2xl", type="email") }}<br>
+        {% for error in form.email.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p class="mb-4">
+        {{ form.password.label(class="text-2xl") }}<br>
+        {{ form.password(class="form-control text-2xl text-black", type="password") }}<br>
+        {% for error in form.password.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p class="mb-4">
+        {{ form.password_again.label(class="text-2xl") }}<br>
+        {{ form.password_again(class="form-control text-2xl text-black", type="password") }}<br>
+        {% for error in form.password_again.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p class="mb-4">
+        {{ form.surname.label(class="text-2xl") }}<br>
+        {{ form.surname(class="form-control text-2xl text-black") }}<br>
+        {% for error in form.surname.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p class="mb-4">
+        {{ form.name.label(class="text-2xl") }}<br>
+        {{ form.name(class="form-control text-2xl text-black") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary text-4xl bg-blue-500") }}</p>
+    {{message}}
+</form>
+{% endblock %}
+
+{% block footer %}
+<div class="max-w-screen-xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="text-emerald-400 text-sm font-medium text-center md:text-left">
+        © Федерация компьютерного спорта Республики Коми, 20??–2026
+    </div>
+
+    <div class="text-center">
+        <a href="mailto:info@fcsrk.ru" class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
+            team@esfkomi.ru
+        </a>
+    </div>
+
+</div>
+{% endblock %}
