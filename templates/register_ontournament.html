@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="ru" class="bg-green-950 text-emerald-100">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./static/dist/output.css" rel="stylesheet">
-    <title>ФКС РК</title>
-</head>
-
+{% block content %}
 <body class="bg-green-950 min-h-screen">
     <div class="w-full">
-        <img src="static/img/csbanner.webp" class="w-full h-auto max-h-[200px] object-cover" alt="Wide banner">
+        <img src="{{ url_for('static', filename='img/csbanner.webp') }}" alt="opa" class="w-full h-auto max-h-[200px] object-cover" alt="Wide banner">
     </div>
     <div
         class="mx-auto bg-emerald-900 border border-emerald-800 rounded-lg shadow-xl overflow-hidden font-sans">
@@ -31,7 +24,7 @@
                         <div class="flex items-center mt-4 space-x-3 text-sm">
                             <div
                                 class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                <img src="static/img/avatar.jpg" class="h-8" alt="Logo" />
+                                <img src="{{ url_for('static', filename='img/avatar.jpg') }}" alt="opa" class="h-8" alt="Logo" />
                             </div>
                             <div>
                                 <p class="text-green-400 text-xs font-bold uppercase">Организатор</p>
@@ -150,7 +143,8 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </body>
 
-</html>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
