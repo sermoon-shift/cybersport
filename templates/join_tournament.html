@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./static/dist/output.css" rel="stylesheet">
+    <title>ФКС РК</title>
+</head>
+
+<body class="bg-green-950 text-emerald-100 min-h-screen">
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 mt-5">
+
+        <h1 class="mb-10 text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase">
+            Регистрация на турнир "МК26. Dota 2. Турнир №7"
+        </h1>
+
+        <div class="mb-10">
+            <h2 class="mb-4 text-2xl font-bold text-white uppercase">
+                Введите данные для регистрации на турнир
+            </h2>
+            <p class="text-emerald-300 text-base leading-relaxed max-w-3xl">
+                Все эти данные обязательны, в том числе профиль ВКонтакте, т.к. он важен для коммуникации между игроками
+                и судьями. Обращаем ваше внимание на то, что если данные при регистрации будут заполнены не в полном
+                объеме, это может повлечь за собой дисквалификацию с турнира.
+            </p>
+        </div>
+
+        <form action="#" method="POST">
+
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Название команды</h2>
+                <div>
+                    <input type="text" id="team_name"
+                        class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 placeholder-emerald-700 shadow-sm transition-colors"
+                        required />
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Капитан</h2>
+
+                <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                        <label for="site_nickname"
+                            class="block mb-2 text-sm font-bold text-emerald-400">Никнейм на
+                            сайте:</label>
+                        <input type="text" id="site_nickname"
+                            class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors"
+                            required />
+                    </div>
+
+                    <div>
+                        <label for="steam_link"
+                            class="block mb-2 text-sm font-bold text-emerald-400">Ссылка на аккаунт в
+                            Steam:</label>
+                        <input type="url" id="steam_link"
+                            class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors"
+                            required />
+                    </div>
+                    <div>
+                        <label for="fio"
+                            class="block mb-2 text-sm font-bold text-emerald-400">ФИО:</label>
+                        <input type="text" id="fio"
+                            class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors"
+                            required />
+                    </div>
+                    <div>
+                        <label for="date_year"
+                            class="block mb-2 text-sm font-bold text-emerald-400">Дата рождения:</label>
+                        <input type="date" id="date_year"
+                            class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors"
+                            required />
+                    </div>
+                    <div>
+                        <label for="vk_link"
+                            class="block mb-2 text-sm font-bold text-emerald-400">Профиль
+                            Вконтакте:</label>
+                        <input type="url" id="vk_link"
+                            class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors"
+                            required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Участник 2</h2>
+                <div class="space-y-5 max-w-2xl">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Никнейм на сайте:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Ссылка на Steam:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">ФИО:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Дата рождения:</label>
+                        <input type="date" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Профиль Вконтакте:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Участник 3</h2>
+                <div class="space-y-5 max-w-2xl">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Никнейм на сайте:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Ссылка на Steam:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">ФИО:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Дата рождения:</label>
+                        <input type="date" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Профиль Вконтакте:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Участник 4</h2>
+                <div class="space-y-5 max-w-2xl">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Никнейм на сайте:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Ссылка на Steam:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">ФИО:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Дата рождения:</label>
+                        <input type="date" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Профиль Вконтакте:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Участник 5</h2>
+                <div class="space-y-5 max-w-2xl">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Никнейм на сайте:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Ссылка на Steam:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">ФИО:</label>
+                        <input type="text" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Дата рождения:</label>
+                        <input type="date" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-emerald-400">Профиль Вконтакте:</label>
+                        <input type="url" class="bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm" required />
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-800 font-bold rounded-lg text-sm px-8 py-3 text-center uppercase tracking-wider transition-all shadow-lg active:scale-95">
+                Отправить заявку
+            </button>
+
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>
