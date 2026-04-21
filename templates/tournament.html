@@ -225,28 +225,23 @@
             </li>
         </ul>
     </div>
-    <footer class="bg-emerald-900 border-t border-emerald-800 py-8 mt-20">
-        <div class="max-w-screen-xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-emerald-400 text-sm font-medium text-center md:text-left">
-                © Федерация компьютерного спорта Республики Коми, 20??–2026
-            </div>
-
-            <div class="text-center">
-                <a href="mailto:info@fcsrk.ru"
-                    class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
-                    team@esfkomi.ru
-                </a>
-            </div>
-
-            <div class="flex items-center">
-                <a href="https://vk.com/cyberkomi" class="block py-2 px-3 md:p-0">
-                    <img src="{{ url_for('static', filename='img/vk.png') }}" alt="opa" class="w-6 h-6" alt="VK">
-                </a>
-            </div>
-        </div>
-    </footer>
 </body>
 
+{% endblock %}
+
+{% block footer %}
+<div class="max-w-screen-xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="text-emerald-400 text-sm font-medium text-center md:text-left">
+        © Федерация компьютерного спорта Республики Коми, 20??–2026
+    </div>
+
+    <div class="text-center">
+        <a href="mailto:info@fcsrk.ru" class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
+            team@esfkomi.ru
+        </a>
+    </div>
+
+</div>
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
