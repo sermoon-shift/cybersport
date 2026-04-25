@@ -30,7 +30,7 @@ def games():
 def register_ontournament():
     return render_template("register_ontournament.html")
 
-@app.route("/join_tournament")
+@app.route("/join_tournament", methods=['GET', 'POST'])
 def join():
     return render_template("join_tournament.html")
 
