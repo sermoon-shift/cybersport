@@ -5,7 +5,10 @@ from flask_login import login_user
 
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
+from forms.join_on_tournamentform import SoloJoin, TeamJoin
 from models.user_model import User
+from models.teams_model import Team
+from models.tournament_model import Tournament
 from db_init import db
 
 app = Flask(__name__)
@@ -30,8 +33,16 @@ def games():
 def register_ontournament():
     return render_template("register_ontournament.html")
 
-@app.route("/join_tournament", methods=['GET', 'POST'])
-def join():
+@app.route("/join_tournament/<tournament_id>", methods=['GET', 'POST'])
+def join(tournament_id):
+    form = TeamJoin()
+    if form.validate_on_submit():
+        db_sess = db.create_session()
+        if db.sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id):
+            return
+        team = Team(
+
+        )
     return render_template("join_tournament.html")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -40,7 +51,6 @@ def login():
     if form.validate_on_submit():
         db_sess = db.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
-        print(user)
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
