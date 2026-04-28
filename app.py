@@ -30,6 +30,10 @@ def games():
 def register_ontournament():
     return render_template("register_ontournament.html")
 
+@app.route("/streams")
+def stream():
+    return render_template("streams.html")
+
 @app.route("/join_tournament", methods=['GET', 'POST'])
 def join():
     return render_template("join_tournament.html")
@@ -79,3 +83,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(host="127.0.0.1", port=8080, debug=True)
+
