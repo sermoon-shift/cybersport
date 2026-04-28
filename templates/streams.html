@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="border-b border-emerald-800 pb-4 mb-10">
+    <h1 class="text-4xl font-bold text-white uppercase tracking-wider text-center">Трансляция</h1>
+</header>
+<div class="flex justify-center items-center w-full">
+<iframe src="https://vk.com/video_ext.php?oid=-144348209&id=456239432&hash=a50b21fa7c90fb20" width="640" height="360" frameborder="0" allowfullscreen="1" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="max-w-screen-xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="text-emerald-400 text-sm font-medium text-center md:text-left">
+        © Федерация компьютерного спорта Республики Коми, 20??–2026
+    </div>
+
+    <div class="text-center">
+        <a href="mailto:info@fcsrk.ru" class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
+            team@esfkomi.ru
+        </a>
+    </div>
+
+</div>
+{% endblock %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>

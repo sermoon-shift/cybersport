@@ -43,6 +43,12 @@ def join(tournament_id):
         team = Team(
 
         )
+@app.route("/streams")
+def stream():
+    return render_template("streams.html")
+
+@app.route("/join_tournament", methods=['GET', 'POST'])
+def join():
     return render_template("join_tournament.html")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -51,6 +57,7 @@ def login():
     if form.validate_on_submit():
         db_sess = db.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
+        print(user)
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
@@ -89,3 +96,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(host="127.0.0.1", port=8080, debug=True)
+
