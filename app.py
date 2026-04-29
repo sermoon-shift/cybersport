@@ -16,40 +16,42 @@ app.config["SECRET_KEY"] = secrets.token_urlsafe(32)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../db/database.db"
 
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/news")
 def news():
     return render_template("news.html")
 
+
 @app.route("/games")
 def games():
     return render_template("tournament.html")
+
 
 @app.route("/register_ontournament")
 def register_ontournament():
     return render_template("register_ontournament.html")
 
+
 @app.route("/join_tournament/<tournament_id>", methods=['GET', 'POST'])
-def join(tournament_id):
+def join_tournament(tournament_id):
     form = TeamJoin()
     if form.validate_on_submit():
         db_sess = db.create_session()
-        if db.sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id):
-            return
-        team = Team(
+        if db.sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id).first():
+            return render_template('join_tournament.html', message="Данная команда уже участвует в этом турнире",
+                                   form=form)
+        return redirect("/")
+    return render_template('join_tournament.html', title='Добавление команды', form=form)
 
-        )
+
 @app.route("/streams")
 def stream():
     return render_template("streams.html")
 
-@app.route("/join_tournament", methods=['GET', 'POST'])
-def join():
-    return render_template("join_tournament.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,6 +67,7 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
@@ -96,4 +99,3 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(host="127.0.0.1", port=8080, debug=True)
-

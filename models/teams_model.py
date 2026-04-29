@@ -7,5 +7,5 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class Team(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     teamname: Mapped[str] = mapped_column()
-    tournament_id: Mapped[str] = mapped_column(ForeignKey("Tournament.id"))
+    tournament_id: Mapped[str] = mapped_column(ForeignKey("tournament.id"))
     data: Mapped[str] = mapped_column()
