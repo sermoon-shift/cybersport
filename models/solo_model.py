@@ -4,9 +4,8 @@ from db_init import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class Team(db.Model):
+class Solo(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    teamname: Mapped[str] = mapped_column()
+    nickname: Mapped[str] = mapped_column()
     tournament_id: Mapped[str] = mapped_column(ForeignKey("tournament.id"))
-    captain_data: Mapped[str] = mapped_column()
-    players_data: Mapped[str] = mapped_column()
+    data: Mapped[str] = mapped_column()

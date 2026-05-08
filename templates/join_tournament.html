@@ -102,11 +102,71 @@
                     </div>
                 </div>
             </div>
+            {% set players = [form.player_one, form.player_two, form.player_three, form.player_four] %}
+            {% for player in players %}
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Игрок {{ players.index(player) + 1 }}</h2>
+            <div class="space-y-5 max-w-2xl">
+                    <div>
+                    {{ player.nickname.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ player.nickname(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in player.nickname.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="space-y-5 max-w-2xl">
+                    <div>
+                    {{ player.steam.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ player.steam(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in player.steam.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="space-y-5 max-w-2xl">
+                    <div>
+                    {{ player.fullname.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ player.fullname(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in player.fullname.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="space-y-5 max-w-2xl">
+                    <div>
+                    {{ player.birthday.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ player.birthday(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in player.birthday.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="space-y-5 max-w-2xl">
+                    <div>
+                    {{ player.vkontakte.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ player.vkontakte(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in player.vkontakte.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+            </div>
+            </div>
+            {% endfor %}
             <button type="submit"
                 class="text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-800 font-bold rounded-lg text-sm px-8 py-3 text-center uppercase tracking-wider transition-all shadow-lg active:scale-95">
                 Отправить заявку
             </button>
-
         </form>
     </div>
 </body>

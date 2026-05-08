@@ -8,6 +8,7 @@ from forms.registerform import RegisterForm
 from forms.join_on_tournamentform import SoloJoin, TeamJoin
 from models.user_model import User
 from models.teams_model import Team
+from models.solo_model import Solo
 from models.tournament_model import Tournament
 from db_init import db
 
@@ -41,9 +42,34 @@ def join_tournament(tournament_id):
     form = TeamJoin()
     if form.validate_on_submit():
         db_sess = db.create_session()
-        if db.sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id).first():
+        if db_sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id).first():
             return render_template('join_tournament.html', message="Данная команда уже участвует в этом турнире",
                                    form=form)
+        players = [form.player_one, form.player_two, form.player_three, form.player_four]
+        players_data = {}
+        for player in players:
+            players_data[player] = {
+                "nickname": player.nickname,
+                "steam": player.steam,
+                "fullname": player.fullname,
+                "birthday": player.birthday,
+                "vkontakte": player.vkontakte
+            }
+        captain_data = {
+            "nickname": form.captain.nickname,
+            "steam": form.captain.steam,
+            "fullname": form.captain.fullname,
+            "birthday": form.captain.birthday,
+            "vkontakte": form.captain.vkontakte
+        }
+        team = Team(
+            teamname=form.team_name.data,
+            tournament_id=tournament_id,
+            players_data=players_data,
+            captain_data=captain_data
+        )
+        db_sess.add(team)
+        db_sess.commit()
         return redirect("/")
     return render_template('join_tournament.html', title='Добавление команды', form=form)
 
