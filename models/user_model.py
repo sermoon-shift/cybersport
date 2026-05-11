@@ -11,8 +11,8 @@ class User(db.Model):
     hashed_password: Mapped[str] = mapped_column()
 
 
-def set_password(self, password):
+    def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 
-def check_password(self, password):
+    def check_password(self, password):
         return check_password_hash(self.hashed_password, password)

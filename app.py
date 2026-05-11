@@ -1,8 +1,8 @@
 import secrets
-
+import os
 from flask import Flask, render_template, redirect
 from flask_login import login_user
-
+from flask_restful import Api
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
 from forms.join_on_tournamentform import SoloJoin, TeamJoin
@@ -10,11 +10,18 @@ from models.user_model import User
 from models.teams_model import Team
 from models.solo_model import Solo
 from models.tournament_model import Tournament
+from resources import TournamentListResource, SoloRegistrationResource
+from flask_migrate import Migrate
 from db_init import db
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_urlsafe(32)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../db/database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'db', 'database.db')}"
+
+api = Api(app)
+db.init_app(app)
+migrate = Migrate(app, db)
 
 
 @app.route("/")
@@ -120,8 +127,8 @@ def reqister():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+api.add_resource(TournamentListResource, '/api/v1/tournaments')
+api.add_resource(SoloRegistrationResource, '/api/v1/register/solo')
+
 if __name__ == "__main__":
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
     app.run(host="127.0.0.1", port=8080, debug=True)
