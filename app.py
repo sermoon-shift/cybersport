@@ -10,7 +10,7 @@ from models.user_model import User
 from models.teams_model import Team
 from models.solo_model import Solo
 from models.tournament_model import Tournament
-from resources import TournamentListResource, SoloRegistrationResource
+from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource
 from flask_migrate import Migrate
 from db_init import db
 
@@ -129,6 +129,7 @@ def reqister():
 
 api.add_resource(TournamentListResource, '/api/v1/tournaments')
 api.add_resource(SoloRegistrationResource, '/api/v1/register/solo')
+api.add_resource(TeamRegistrationResource, '/api/v1/register/team')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
