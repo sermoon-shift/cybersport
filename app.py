@@ -9,6 +9,7 @@ from forms.join_on_tournamentform import SoloJoin, TeamJoin
 from models.user_model import User
 from models.teams_model import Team
 from models.solo_model import Solo
+from models.news_model import News
 from models.tournament_model import Tournament
 from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource
 from flask_migrate import Migrate
@@ -31,7 +32,14 @@ def index():
 
 @app.route("/news")
 def news():
-    return render_template("news.html")
+    all_news = News.query.order_by(News.date.desc()).all()
+    return render_template("news.html", news_list=all_news)
+
+
+@app.route("/news/<int:news_id>")
+def news_detail(news_id):
+    item = News.query.get_or_404(news_id)
+    return render_template("news_detail.html", item=item)
 
 
 @app.route("/games")

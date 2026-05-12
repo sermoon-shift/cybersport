@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article>
+        <h1 class="text-4xl md:text-5xl font-black text-white uppercase leading-tight mb-4 tracking-tight">
+            {{ item.title }}
+        </h1>
+        
+        <div class="text-emerald-400 text-lg font-medium mb-8">
+            {{ item.date.strftime('%d.%m.%Y') }}
+        </div>
+
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-emerald-800 mb-10">
+            <img src="{{ url_for('static', filename='img/' + item.image) }}" class="w-full h-auto" alt="Главное фото">
+        </div>
+
+        <div class="text-emerald-50 text-xl leading-relaxed space-y-6">
+            {{ item.content | safe }}
+        </div>
+    </article>
+</div>
+{% endblock %}
