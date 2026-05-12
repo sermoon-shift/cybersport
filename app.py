@@ -3,6 +3,8 @@ import os
 from flask import Flask, render_template, redirect
 from flask_login import login_user
 from flask_restful import Api
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
 from forms.join_on_tournamentform import SoloJoin, TeamJoin
@@ -23,11 +25,19 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'db',
 api = Api(app)
 db.init_app(app)
 migrate = Migrate(app, db)
+admin = Admin(app, name='CyberSport Admin')
+
+admin.add_view(ModelView(User, db))
+admin.add_view(ModelView(News, db))
+admin.add_view(ModelView(Tournament, db))
+admin.add_view(ModelView(Team, db))
+admin.add_view(ModelView(Solo, db))
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    latest_news = News.query.order_by(News.date.desc()).limit(3).all()
+    return render_template("index.html", news_list=latest_news)
 
 
 @app.route("/news")
