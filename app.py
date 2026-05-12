@@ -37,6 +37,7 @@ admin.add_view(ModelView(Solo, db))
 @app.route("/")
 def index():
     latest_news = News.query.order_by(News.date.desc()).limit(3).all()
+    latest_games = Tournament.query.order_by(Tournament.date.desc()).limit(3).all()
     return render_template("index.html", news_list=latest_news)
 
 
@@ -54,7 +55,14 @@ def news_detail(news_id):
 
 @app.route("/games")
 def games():
-    return render_template("tournament.html")
+    all_games = Tournament.query.order_by(Tournament.date.desc()).all()
+    return render_template("tournament.html", games_list=all_games)
+
+
+@app.route("/games/<int:games_id>")
+def games_detail(games_id):
+    item = Tournament.query.get_or_404(games_id)
+    return render_template("games_detail.html", item=item)
 
 
 @app.route("/register_ontournament")
