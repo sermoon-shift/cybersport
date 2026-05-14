@@ -1,10 +1,11 @@
 import secrets
 import os
-from flask import Flask, render_template, redirect
-from flask_login import login_user
+from flask import Flask, render_template, redirect, url_for, request
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import Api
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin import AdminIndexView
 from forms.loginform import LoginForm
 from forms.registerform import RegisterForm
 from forms.join_on_tournamentform import SoloJoin, TeamJoin
@@ -16,22 +17,46 @@ from models.tournament_model import Tournament
 from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource
 from flask_migrate import Migrate
 from db_init import db
+from datetime import timedelta
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.token_urlsafe(32)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'db', 'database.db')}"
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=30)
 
 api = Api(app)
 db.init_app(app)
 migrate = Migrate(app, db)
-admin = Admin(app, name='CyberSport Admin')
 
-admin.add_view(ModelView(User, db))
-admin.add_view(ModelView(News, db))
-admin.add_view(ModelView(Tournament, db))
-admin.add_view(ModelView(Team, db))
-admin.add_view(ModelView(Solo, db))
+
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.id == 1
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login', next=request.url))
+
+
+class MyAdminModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.id == 1
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login', next=request.url))
+
+
+admin = Admin(app, name='ФКС РК', index_view=MyAdminIndexView())
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+admin.add_view(MyAdminModelView(User, db))
+admin.add_view(MyAdminModelView(News, db))
+admin.add_view(MyAdminModelView(Tournament, db))
+admin.add_view(MyAdminModelView(Team, db))
+admin.add_view(MyAdminModelView(Solo, db))
 
 
 @app.route("/")
@@ -39,6 +64,11 @@ def index():
     latest_news = News.query.order_by(News.date.desc()).limit(3).all()
     latest_games = Tournament.query.order_by(Tournament.date.desc()).limit(3).all()
     return render_template("index.html", news_list=latest_news)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.route("/news")
@@ -66,8 +96,16 @@ def games_detail(games_id):
 
 
 @app.route("/register_ontournament")
+@login_required
 def register_ontournament():
     return render_template("register_ontournament.html")
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 @app.route("/join_tournament/<tournament_id>", methods=['GET', 'POST'])
@@ -116,40 +154,35 @@ def stream():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        db_sess = db.create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
-        print(user)
+        user = db.session.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
-        return render_template('login.html',
-                               message="Неправильный логин или пароль",
-                               form=form)
+        return render_template('login.html', title='Авторизация', form=form, message="Неверный логин или пароль")
     return render_template('login.html', title='Авторизация', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def reqister():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
-                                   form=form,
-                                   message="Пароли не совпадают")
-        db_sess = db.create_session()
-        if db_sess.query(User).filter(User.email == form.email.data).first():
-            return render_template('register.html', title='Регистрация',
-                                   form=form,
-                                   message="Такой пользователь уже есть")
+            return render_template('register.html', title='Регистрация', form=form, message="Пароли не совпадают")
+        existing_user = db.session.query(User).filter(
+            (User.email == form.email.data) | (User.username == form.username.data)
+        ).first()
+        if existing_user:
+            return render_template('register.html', title='Регистрация', form=form,
+                                   message="Такой логин или почта уже заняты")
         user = User(
+            username=form.username.data,
             name=form.name.data,
-            surname=form.surname.data,
-            email=form.email.data,
+            email=form.email.data
         )
         user.set_password(form.password.data)
-        db_sess.add(user)
-        db_sess.commit()
-        return redirect('/login')
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('login'))
     return render_template('register.html', title='Регистрация', form=form)
 
 

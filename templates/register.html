@@ -1,57 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p class="text-5xl text-center mb-8">Регистрация</p>
-<form action="" method="post" class="text-center">
-    {{ form.hidden_tag() }}
-    <p class="mb-4">
-        {{ form.email.label(class="text-2xl") }}<br>
-        {{ form.email(class="form-control text-2xl", type="email") }}<br>
-        {% for error in form.email.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
+<p class="text-5xl text-center mb-8 font-bold text-white uppercase tracking-wider">Регистрация</p>
+<div class="max-w-md mx-auto bg-emerald-900/50 p-8 rounded-lg border border-emerald-800 shadow-2xl">
+    <form action="" method="post" class="space-y-6">
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.name.label(class="text-xl text-white block mb-1 font-medium") }}
+            {{ form.name(class="form-control text-xl text-black w-full rounded p-2 focus:ring-2 focus:ring-green-500
+            outline-none") }}
+            {% for error in form.name.errors %}
+            <p class="text-red-400 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <p class="mb-4 text-left">
+            {{ form.username.label(class="text-2xl text-white block mb-1") }}
+            {{ form.username(class="form-control text-2xl text-black w-full rounded p-1") }}
+            {% for error in form.username.errors %}
+        <p class="text-red-400 text-sm mt-1">{{ error }}</p>
         {% endfor %}
-    </p>
-    <p class="mb-4">
-        {{ form.password.label(class="text-2xl") }}<br>
-        {{ form.password(class="form-control text-2xl text-black", type="password") }}<br>
-        {% for error in form.password.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p class="mb-4">
-        {{ form.password_again.label(class="text-2xl") }}<br>
-        {{ form.password_again(class="form-control text-2xl text-black", type="password") }}<br>
-        {% for error in form.password_again.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p class="mb-4">
-        {{ form.surname.label(class="text-2xl") }}<br>
-        {{ form.surname(class="form-control text-2xl text-black") }}<br>
-        {% for error in form.surname.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p class="mb-4">
-        {{ form.name.label(class="text-2xl") }}<br>
-        {{ form.name(class="form-control text-2xl text-black") }}<br>
-        {% for error in form.name.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>{{ form.submit(type="submit", class="btn btn-primary text-4xl bg-blue-500") }}</p>
-    {{message}}
-</form>
+        </p>
+        <div>
+            {{ form.email.label(class="text-xl text-white block mb-1 font-medium") }}
+            {{ form.email(class="form-control text-xl text-black w-full rounded p-2 focus:ring-2 focus:ring-green-500
+            outline-none", type="email") }}
+            {% for error in form.email.errors %}
+            <p class="text-red-400 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.password.label(class="text-xl text-white block mb-1 font-medium") }}
+            {{ form.password(class="form-control text-xl text-black w-full rounded p-2 focus:ring-2 focus:ring-green-500
+            outline-none", type="password") }}
+            {% for error in form.password.errors %}
+            <p class="text-red-400 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.password_again.label(class="text-xl text-white block mb-1 font-medium") }}
+            {{ form.password_again(class="form-control text-xl text-black w-full rounded p-2 focus:ring-2
+            focus:ring-green-500 outline-none", type="password") }}
+            {% for error in form.password_again.errors %}
+            <p class="text-red-400 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <p class="pt-2">
+            {{ form.submit(type="submit", class="w-full text-2xl bg-green-600 hover:bg-green-500 text-white font-bold
+            py-2.5 px-4 rounded transition-colors cursor-pointer shadow-md uppercase tracking-wide") }}
+        </p>
+
+        {% if message %}
+        <div class="text-red-400 font-bold text-center border border-red-500/30 bg-red-500/10 py-2 rounded">{{ message
+            }}
+        </div>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}
 
 {% block footer %}
@@ -59,12 +67,10 @@
     <div class="text-emerald-400 text-sm font-medium text-center md:text-left">
         © Федерация компьютерного спорта Республики Коми, 20??–2026
     </div>
-
     <div class="text-center">
-        <a href="mailto:info@fcsrk.ru" class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
+        <a href="mailto:team@esfkomi.ru" class="text-emerald-100 hover:text-green-400 transition-colors font-medium">
             team@esfkomi.ru
         </a>
     </div>
-
 </div>
 {% endblock %}
