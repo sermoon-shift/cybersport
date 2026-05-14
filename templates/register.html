@@ -49,8 +49,10 @@
             </p>
         {% endfor %}
     </p>
-    <p>{{ form.submit(type="submit", class="btn btn-primary text-4xl bg-blue-500") }}</p>
-    {{message}}
+     <button type="submit"
+                class="text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-800 font-bold rounded-lg text-sm px-8 py-3 text-center uppercase tracking-wider transition-all shadow-lg active:scale-95">
+                Отправить заявку
+            </button>
 </form>
 {% endblock %}
 

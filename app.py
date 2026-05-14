@@ -1,6 +1,7 @@
 import secrets
 import os
-from flask import Flask, render_template, redirect
+import json
+from flask import Flask, render_template, redirect, request
 from flask_login import login_user
 from flask_restful import Api
 from flask_admin import Admin
@@ -16,9 +17,11 @@ from models.tournament_model import Tournament
 from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource
 from flask_migrate import Migrate
 from db_init import db
+from flask_wtf.csrf import CSRFProtect
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
+csrf = CSRFProtect(app)
 app.config["SECRET_KEY"] = secrets.token_urlsafe(32)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'db', 'database.db')}"
 
@@ -38,7 +41,7 @@ admin.add_view(ModelView(Solo, db))
 def index():
     latest_news = News.query.order_by(News.date.desc()).limit(3).all()
     latest_games = Tournament.query.order_by(Tournament.date.desc()).limit(3).all()
-    return render_template("index.html", news_list=latest_news)
+    return render_template("index.html", news_list=latest_news, games_list=latest_games)
 
 
 @app.route("/news")
@@ -59,25 +62,32 @@ def games():
     return render_template("tournament.html", games_list=all_games)
 
 
-@app.route("/games/<int:games_id>")
-def games_detail(games_id):
-    item = Tournament.query.get_or_404(games_id)
-    return render_template("games_detail.html", item=item)
-
-
-@app.route("/register_ontournament")
-def register_ontournament():
-    return render_template("register_ontournament.html")
-
 
 @app.route("/join_tournament/<tournament_id>", methods=['GET', 'POST'])
 def join_tournament(tournament_id):
     form = TeamJoin()
+    format_parameter = True
     if form.validate_on_submit():
         db_sess = db.create_session()
         if db_sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id).first():
-            return render_template('join_tournament.html', message="Данная команда уже участвует в этом турнире",
-                                   form=form)
+            return render_template('tournament.html', message="Данная команда уже участвует в этом турнире",
+                                   form=form, format_parameter=format_parameter)
+        if db_sess.query(Tournament).filter(Tournament.id == tournament_id, Tournament.is_solo == 1).first():
+            format_parameter = False
+            data = {
+                "steam": form.captain.steam,
+                "fullname": form.captain.fullname,
+                "birthday": form.captain.birthday,
+                "vkontakte": form.captain.vkontakte
+            }
+            solo = Solo(
+                nickname=form.captain.nickname,
+                tournament_id=tournament_id,
+                data = json.dumps(data)
+            )
+            db_sess.add(solo)
+            db_sess.commit()
+            return redirect("/")
         players = [form.player_one, form.player_two, form.player_three, form.player_four]
         players_data = {}
         for player in players:
@@ -98,13 +108,15 @@ def join_tournament(tournament_id):
         team = Team(
             teamname=form.team_name.data,
             tournament_id=tournament_id,
-            players_data=players_data,
-            captain_data=captain_data
+            players_data=json.dumps(players_data),
+            captain_data=json.dumps(captain_data)
         )
         db_sess.add(team)
         db_sess.commit()
         return redirect("/")
-    return render_template('join_tournament.html', title='Добавление команды', form=form)
+    elif request.method == 'POST':
+        print(form.errors)
+    return render_template('join_tournament.html', form=form, format_parameter=format_parameter)
 
 
 @app.route("/streams")
