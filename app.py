@@ -57,11 +57,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-admin.add_view(MyAdminModelView(User, db))
-admin.add_view(MyAdminModelView(News, db))
-admin.add_view(MyAdminModelView(Tournament, db))
-admin.add_view(MyAdminModelView(Team, db))
-admin.add_view(MyAdminModelView(Solo, db))
+admin.add_view(MyAdminModelView(User, db.session))
+admin.add_view(MyAdminModelView(News, db.session))
+admin.add_view(MyAdminModelView(Tournament, db.session))
+admin.add_view(MyAdminModelView(Team, db.session))
+admin.add_view(MyAdminModelView(Solo, db.session))
 
 
 @app.route("/")
@@ -113,60 +113,76 @@ def logout():
     return redirect("/")
 
 
-@app.route("/join_tournament/<tournament_id>", methods=['GET', 'POST'])
+@app.route("/join_tournament/<int:tournament_id>", methods=['GET', 'POST'])
+@login_required
 def join_tournament(tournament_id):
-    form = TeamJoin()
-    format_parameter = True
+    tournament = Tournament.query.get_or_404(tournament_id)
+    if tournament.is_solo:
+        form = SoloJoin()
+        format_parameter = False
+    else:
+        form = TeamJoin()
+        format_parameter = True
     if form.validate_on_submit():
-        db_sess = db.create_session()
-        if db_sess.query(Team).filter(Team.name == form.team_name.data, Team.tournament_id == tournament_id).first():
-            return render_template('tournament.html', message="Данная команда уже участвует в этом турнире",
-                                   form=form, format_parameter=format_parameter)
-        if db_sess.query(Tournament).filter(Tournament.id == tournament_id, Tournament.is_solo == 1).first():
-            format_parameter = False
+        if tournament.is_solo:
+            if Solo.query.filter(Solo.nickname == form.captain.nickname.data,
+                                 Solo.tournament_id == str(tournament_id)).first():
+                return render_template('join_tournament.html', message="Вы уже зарегистрированы на этот турнир",
+                                       form=form, format_parameter=format_parameter)
             data = {
-                "steam": form.captain.steam,
-                "fullname": form.captain.fullname,
-                "birthday": form.captain.birthday,
-                "vkontakte": form.captain.vkontakte
+                "steam": form.captain.steam.data,
+                "fullname": form.captain.fullname.data,
+                "birthday": form.captain.birthday.data.isoformat() if form.captain.birthday.data else None,
+                "vkontakte": form.captain.vkontakte.data
             }
             solo = Solo(
-                nickname=form.captain.nickname,
-                tournament_id=tournament_id,
-                data = json.dumps(data)
+                nickname=form.captain.nickname.data,
+                tournament_id=str(tournament_id),
+                data=json.dumps(data, ensure_ascii=False)
             )
-            db_sess.add(solo)
-            db_sess.commit()
-            return redirect("/")
-        players = [form.player_one, form.player_two, form.player_three, form.player_four]
-        players_data = {}
-        for player in players:
-            players_data[player] = {
-                "nickname": player.nickname,
-                "steam": player.steam,
-                "fullname": player.fullname,
-                "birthday": player.birthday,
-                "vkontakte": player.vkontakte
+            db.session.add(solo)
+            db.session.commit()
+            return redirect("/tournament_success")
+        else:
+            if Team.query.filter(Team.teamname == form.team_name.data,
+                                 Team.tournament_id == str(tournament_id)).first():
+                return render_template('join_tournament.html', message="Данная команда уже участвует в этом турнире",
+                                       form=form, format_parameter=format_parameter)
+            players = [form.player_one, form.player_two, form.player_three, form.player_four]
+            players_data = {}
+            for i, player in enumerate(players, start=1):
+                players_data[f"player_{i}"] = {
+                    "nickname": player.nickname.data,
+                    "steam": player.steam.data,
+                    "fullname": player.fullname.data,
+                    "birthday": player.birthday.data.isoformat() if player.birthday.data else None,
+                    "vkontakte": player.vkontakte.data
+                }
+            captain_data = {
+                "nickname": form.captain.nickname.data,
+                "steam": form.captain.steam.data,
+                "fullname": form.captain.fullname.data,
+                "birthday": form.captain.birthday.data.isoformat() if form.captain.birthday.data else None,
+                "vkontakte": form.captain.vkontakte.data
             }
-        captain_data = {
-            "nickname": form.captain.nickname,
-            "steam": form.captain.steam,
-            "fullname": form.captain.fullname,
-            "birthday": form.captain.birthday,
-            "vkontakte": form.captain.vkontakte
-        }
-        team = Team(
-            teamname=form.team_name.data,
-            tournament_id=tournament_id,
-            players_data=json.dumps(players_data),
-            captain_data=json.dumps(captain_data)
-        )
-        db_sess.add(team)
-        db_sess.commit()
-        return redirect("/")
+            team = Team(
+                teamname=form.team_name.data,
+                tournament_id=str(tournament_id),
+                players_data=json.dumps(players_data, ensure_ascii=False),
+                captain_data=json.dumps(captain_data, ensure_ascii=False)
+            )
+            db.session.add(team)
+            db.session.commit()
+            return redirect("/tournament_success")
     elif request.method == 'POST':
         print(form.errors)
     return render_template('join_tournament.html', form=form, format_parameter=format_parameter)
+
+
+@app.route("/tournament_success")
+@login_required
+def tournament_success():
+    return render_template('tournament_success.html')
 
 
 @app.route("/streams")

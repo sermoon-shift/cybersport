@@ -19,7 +19,11 @@
                 объеме, это может повлечь за собой дисквалификацию с турнира.
             </p>
         </div>
-
+        {% if message %}
+        <div class="p-4 mb-6 text-sm text-red-200 bg-red-900/80 border border-red-700 rounded-lg shadow-md" role="alert">
+            <span class="font-bold">Внимание:</span> {{ message }}
+        </div>
+        {% endif %}
         <form action="" method="POST">
              {{ form.hidden_tag() }}
              {{ form.csrf_token }}
