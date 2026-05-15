@@ -38,97 +38,38 @@
     </header>
 
     <ul class="flex flex-wrap -mx-4">
-        <li class="w-full md:w-1/2 px-4 mb-8">
-            <div
-                class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <a href="#" class="shrink-0">
-                    <img class="w-48 h-48 object-cover rounded-lg border border-emerald-700"
-                        src="{{ url_for('static', filename='img/Counter-strike_2.jpg') }}" alt="Фон новости" />
-                </a>
-                <div class="flex flex-col justify-center">
-                    <a href="#">
-                        <h5 class="text-2xl font-bold text-white mb-4">Counter Strike 2</h5>
-                    </a>
-                    <a href="#"
-                        class="inline-block text-center px-6 py-2.5 bg-green-500 text-white font-bold rounded hover:bg-green-400 transition-all uppercase text-sm">
-                        Перейти к турниру
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li class="w-full md:w-1/2 px-4 mb-8">
-            <div
-                class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <a href="#" class="shrink-0">
-                    <img class="w-48 h-48 object-cover rounded-lg border border-emerald-700"
-                        src="{{ url_for('static', filename='img/Counter-strike_2.jpg') }}" alt="Фон новости" />
-                </a>
-                <div class="flex flex-col justify-center">
-                    <a href="#">
-                        <h5 class="text-2xl font-bold text-white mb-4">Counter Strike 2</h5>
-                    </a>
-                    <a href="#"
-                        class="inline-block text-center px-6 py-2.5 bg-green-500 text-white font-bold rounded hover:bg-green-400 transition-all uppercase text-sm">
-                        Перейти к турниру
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li class="w-full md:w-1/2 px-4 mb-8">
-            <div
-                class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <a href="#" class="shrink-0">
-                    <img class="w-48 h-48 object-cover rounded-lg border border-emerald-700"
-                        src="{{ url_for('static', filename='img/Counter-strike_2.jpg') }}" alt="Фон новости" />
-                </a>
-                <div class="flex flex-col justify-center">
-                    <a href="#">
-                        <h5 class="text-2xl font-bold text-white mb-4">Counter Strike 2</h5>
-                    </a>
-                    <a href="#"
-                        class="inline-block text-center px-6 py-2.5 bg-green-500 text-white font-bold rounded hover:bg-green-400 transition-all uppercase text-sm">
-                        Перейти к турниру
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li class="w-full md:w-1/2 px-4 mb-8">
-            <div
-                class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <a href="#" class="shrink-0">
-                    <img class="w-48 h-48 object-cover rounded-lg border border-emerald-700"
-                        src="{{ url_for('static', filename='img/Counter-strike_2.jpg') }}" alt="Фон новости" />
-                </a>
-                <div class="flex flex-col justify-center">
-                    <a href="#">
-                        <h5 class="text-2xl font-bold text-white mb-4">Counter Strike 2</h5>
-                    </a>
-                    <a href="#"
-                        class="inline-block text-center px-6 py-2.5 bg-green-500 text-white font-bold rounded hover:bg-green-400 transition-all uppercase text-sm">
-                        Перейти к турниру
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li class="w-full md:w-1/2 px-4 mb-8">
-            <div
-                class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <a href="#" class="shrink-0">
-                    <img class="w-48 h-48 object-cover rounded-lg border border-emerald-700"
-                        src="{{ url_for('static', filename='img/Counter-strike_2.jpg') }}" alt="Фон новости" />
-                </a>
-                <div class="flex flex-col justify-center">
-                    <a href="#">
-                        <h5 class="text-2xl font-bold text-white mb-4">Counter Strike 2</h5>
-                    </a>
-                    <a href="#"
-                        class="inline-block text-center px-6 py-2.5 bg-green-500 text-white font-bold rounded hover:bg-green-400 transition-all uppercase text-sm">
-                        Перейти к турниру
-                    </a>
-                </div>
-            </div>
-        </li>
-    </ul>
+    {% for item in games_list %}
+    <li class="w-full md:w-1/3 px-4 mb-8">
+        <div class="bg-emerald-900 p-6 rounded-lg shadow-xl border border-emerald-800 h-full flex flex-col">
+            <a href="{{ url_for('join_tournament', tournament_id = item.id) }}" class="block overflow-hidden rounded-lg mb-6">
+                <img class="hover:scale-105 transition-transform duration-300 w-full h-full object-cover"
+                     src="{{ url_for('static', filename='img/' + item.image) }}"
+                     alt="{{ item.title }}" />
+            </a>
+
+            <a href="{{ url_for('join_tournament', tournament_id = item.id) }}">
+                <h2 class="text-2xl font-semibold text-white mb-2 uppercase">{{ item.name }}</h2>
+            </a>
+
+            <p class="text-emerald-100 flex-grow line-clamp-3">
+                {{ item.date.strftime('%d.%m.%Y') }}
+            </p>
+            <p class="mb-4 flex-grow line-clamp-3">
+             {% if item.is_solo == True %}
+                            <p class="">Соло-турнир</p>
+                            {% else %}
+                            <p class="">Командный турнир</p>
+                            {% endif %}
+            </p>
+
+            <a href="{{ url_for('join_tournament', tournament_id = item.id) }}"
+                class="w-full block text-center px-4 py-2 bg-green-500 text-white rounded font-bold hover:bg-green-400 transition-colors uppercase text-sm">
+                Подробнее
+            </a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 </div>
 {% endblock %}
 

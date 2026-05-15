@@ -6,7 +6,7 @@
     <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 mt-5">
 
         <h1 class="mb-10 text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase">
-            Регистрация на турнир "МК26. Dota 2. Турнир №1"
+            Регистрация на турнир
         </h1>
 
         <div class="mb-10">
@@ -20,8 +20,11 @@
             </p>
         </div>
 
-        <form action="#" method="POST">
+        <form action="" method="POST">
+             {{ form.hidden_tag() }}
+             {{ form.csrf_token }}
 
+            {% if format_parameter == True %}
             <div class="mb-10">
                 <h2 class="mb-4 text-2xl font-bold text-white uppercase">Название команды</h2>
                 <div>
@@ -163,7 +166,79 @@
             </div>
             </div>
             {% endfor %}
-            <button type="submit"
+
+            {% else %}
+            <div class="mb-10">
+                <h2 class="mb-4 text-2xl font-bold text-white uppercase">Игрок</h2>
+
+                <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                    {{ form.captain.nickname.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ form.captain.nickname(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in form.captain.nickname.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+
+                    <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                    {{ form.captain.steam.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ form.captain.steam(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in form.captain.steam.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+
+                    </div>
+                   <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                    {{ form.captain.fullname.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ form.captain.fullname(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in form.captain.fullname.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+                    </div>
+                    <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                    {{ form.captain.birthday.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ form.captain.birthday(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in form.captain.birthday.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+
+                    </div>
+                    <div class="space-y-5 max-w-2xl">
+
+                    <div>
+                    {{ form.captain.vkontakte.label(class="block text-sm font-bold text-emerald-400") }}<br>
+                    {{ form.captain.vkontakte(class="form-control bg-emerald-900 border border-emerald-800 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 shadow-sm transition-colors") }}<br>
+                    {% for error in form.captain.vkontakte.errors %}
+                     <p class="alert alert-danger" role="alert">
+                     {{ error }}
+                    </p>
+                    {% endfor %}
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+              <button type="submit"
                 class="text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-800 font-bold rounded-lg text-sm px-8 py-3 text-center uppercase tracking-wider transition-all shadow-lg active:scale-95">
                 Отправить заявку
             </button>

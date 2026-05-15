@@ -6,6 +6,7 @@ from forms.join_one_player_form import PlayerForm
 class SoloJoin(FlaskForm):
     team_name = StringField('Название команды', validators=[DataRequired()])
     captain = FormField(PlayerForm)
+    submit = SubmitField('Войти')
 
 class TeamJoin(SoloJoin):
     player_one = FormField(PlayerForm)

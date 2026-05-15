@@ -6,33 +6,36 @@
     <header class="border-b border-emerald-800 pb-4 mb-10 mt-10">
         <h1 class="text-4xl font-bold text-white uppercase tracking-wider text-center">Турниры</h1>
     </header>
-    <div class="p-8">
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 list-none p-0">
-            <li class="flex justify-center">
+    {% for item in games_list %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 list-none p-0">
+            <div class="flex justify-center">
                 <div
                     class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
+                    <a href="/join_tournament/{{ item.id }}">
+                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/' + item.image) }}" alt="Games"/>
                     </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
+                    <a href="/join_tournament/{{ item.id }}">
+                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">{{ item.name }}
+                            </h5>
                     </a>
                     <div class="space-y-4">
                         <p class="text-emerald-100 leading-relaxed">Организатор: <span
                                 class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
+                        <p class="text-emerald-100 leading-relaxed">Дата проведения: <span class="font-medium text-green-400">{{ item.date.strftime('%d.%m.%Y') }}
+                                </span></p>
                         <p class="text-emerald-300 leading-relaxed text-sm">
                             <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
+                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Формат:</span>
+                            {% if item.is_solo == True %}
+                            <p class="text-emerald-300 leading-relaxed text-sm">Соло-турнир</p>
+                            {% else %}
+                            <p class="text-emerald-300 leading-relaxed text-sm">Командный турнир</p>
+                            {% endif %}
                         </p>
                     </div>
 
                     <div class="mt-6">
-                        <a href="/register_ontournament"
+                        <a href="/join_tournament/{{ item.id }}"
                             class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
                             Зарегистрироваться
                             <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true"
@@ -44,187 +47,9 @@
                         </a>
                     </div>
                 </div>
-            </li>
-
-            <li class="flex justify-center">
-                <div
-                    class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
-                    </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
-                    </a>
-                    <div class="space-y-4">
-                        <p class="text-emerald-100 leading-relaxed">Организатор: <span
-                                class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
-                        <p class="text-emerald-300 leading-relaxed text-sm">
-                            <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
-                        </p>
-                    </div>
-
-                    <div class="mt-6">
-                        <a href="#"
-                            class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
-                            Зарегистрироваться
-                            <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="flex justify-center">
-                <div
-                    class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
-                    </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
-                    </a>
-                    <div class="space-y-4">
-                        <p class="text-emerald-100 leading-relaxed">Организатор: <span
-                                class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
-                        <p class="text-emerald-300 leading-relaxed text-sm">
-                            <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
-                        </p>
-                    </div>
-                    <div class="mt-6">
-                        <a href="#"
-                            class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
-                            Зарегистрироваться
-                            <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </li>
-            <li class="flex justify-center">
-                <div
-                    class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
-                    </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
-                    </a>
-                    <div class="space-y-4">
-                        <p class="text-emerald-100 leading-relaxed">Организатор: <span
-                                class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
-                        <p class="text-emerald-300 leading-relaxed text-sm">
-                            <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
-                        </p>
-                    </div>
-                    <div class="mt-6">
-                        <a href="#"
-                            class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
-                            Зарегистрироваться
-                            <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </li>
-            <li class="flex justify-center">
-                <div
-                    class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
-                    </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
-                    </a>
-                    <div class="space-y-4">
-                        <p class="text-emerald-100 leading-relaxed">Организатор: <span
-                                class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
-                        <p class="text-emerald-300 leading-relaxed text-sm">
-                            <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
-                        </p>
-                    </div>
-                    <div class="mt-6">
-                        <a href="#"
-                            class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
-                            Зарегистрироваться
-                            <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </li>
-            <li class="flex justify-center">
-                <div
-                    class="bg-emerald-900 block max-w-sm p-6 border border-emerald-800 rounded-lg shadow-xl h-full transition-transform hover:scale-[1.02]">
-                    <a href="#">
-                        <img class="rounded-lg w-full object-cover border border-emerald-800" src="{{ url_for('static', filename='img/thl.jpg') }}" alt="opa"
-                            alt="Dota 2 Tournament" />
-                    </a>
-                    <a href="#">
-                        <h5 class="mt-6 mb-2 text-2xl font-bold tracking-tight text-white uppercase">РК26. Dota2. Турнир
-                            №1</h5>
-                    </a>
-                    <div class="space-y-4">
-                        <p class="text-emerald-100 leading-relaxed">Организатор: <span
-                                class="font-medium text-white">ФКС РК</span></p>
-                        <p class="text-emerald-100 leading-relaxed">Приз: <span class="font-medium text-green-400">5
-                                копеек</span></p>
-                        <p class="text-emerald-300 leading-relaxed text-sm">
-                            <span
-                                class="text-green-400 font-bold uppercase text-xs block mb-1 text-[10px]">Регистрация:</span>
-                            с 16 апреля 00:00 до 24 апреля 17:55
-                        </p>
-                    </div>
-                    <div class="mt-6">
-                        <a href="#"
-                            class="inline-flex items-center text-white bg-green-600 border border-transparent hover:bg-green-500 focus:ring-4 focus:ring-green-800 shadow-md font-bold leading-5 rounded-lg text-sm px-4 py-2.5 transition-colors focus:outline-none w-full justify-center uppercase">
-                            Зарегистрироваться
-                            <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+            </div>
+              {% endfor %}
+        </div>
 </body>
 
 {% endblock %}

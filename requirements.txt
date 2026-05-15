@@ -1,0 +1,5 @@
+alembic==1.18.4
+Flask-Login==0.6.3
+Flask-Migrate==4.1.0
+Flask-RESTful==0.3.10
+SQLAlchemy==2.0.48
