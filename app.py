@@ -17,7 +17,8 @@ from models.teams_model import Team
 from models.solo_model import Solo
 from models.news_model import News
 from models.tournament_model import Tournament
-from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource
+from resources import TournamentListResource, SoloRegistrationResource, TeamRegistrationResource, SoloListResource, \
+    NewsListResource, TeamListResource
 from flask_migrate import Migrate
 from db_init import db
 from datetime import timedelta
@@ -229,6 +230,9 @@ def register():
 api.add_resource(TournamentListResource, '/api/v1/tournaments')
 api.add_resource(SoloRegistrationResource, '/api/v1/register/solo')
 api.add_resource(TeamRegistrationResource, '/api/v1/register/team')
+api.add_resource(SoloListResource, '/api/v1/solos')
+api.add_resource(TeamListResource, '/api/v1/teams')
+api.add_resource(NewsListResource, '/api/v1/news')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
