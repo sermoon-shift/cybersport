@@ -191,6 +191,11 @@ def stream():
     return render_template("streams.html")
 
 
+@app.route("/api")
+def apikey():
+    return render_template("api.html")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
